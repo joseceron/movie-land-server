@@ -1,0 +1,1 @@
+export { MovieAlreadyExistsException } from './MovieAlreadyExistsException'

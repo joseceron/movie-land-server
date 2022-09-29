@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-console-app": "nodemon ./src/infrastructure/driving-adapters/console/console.ts"
   },
   "keywords": [],
   "author": "",
@@ -25,5 +26,10 @@
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "uuid": "^9.0.0"
+  },
+  "_moduleAliases": {
+    "@infrastructure": "src/infrastructure",
+    "@application": "src/application",
+    "@domain": "src/domain"
   }
 }
