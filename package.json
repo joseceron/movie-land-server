@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-console-app": "nodemon ./src/infrastructure/driving-adapters/console/console.ts",
-    "start-console-dynamo-app": "nodemon ./src/infrastructure/driving-adapters/console/console-dynamo.ts"
+    "start-console-dynamo-app": "nodemon ./src/infrastructure/driving-adapters/console/console-dynamo.ts",
+    "start-rest-app": "nodemon ./src/infrastructure/driving-adapters/api-rest/start.ts"
   },
   "keywords": [],
   "author": "",
