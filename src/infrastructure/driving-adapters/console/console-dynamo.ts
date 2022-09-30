@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv'
+import path from 'path'
+
 import { DynamoDBMovieRepository } from '../../implementations/Aws/dynamo-db/DynamoDBMovieRepository'
 import { UuidV4Generator } from '../../Uuidv4Generator'
 
@@ -7,6 +10,10 @@ import { MovieUpdaterUseCase } from '../../../application/useCases/MovieUpdater'
 import { MovieDeleterUseCase } from '../../../application/useCases/MovieDeleter'
 
 (async () => {
+  dotenv.config({
+    path: path.resolve(__dirname, '../../../../.env')
+  })
+
   const uuidV4Generator = new UuidV4Generator()
   const dynamoDBMovieRepo = new DynamoDBMovieRepository()
 
