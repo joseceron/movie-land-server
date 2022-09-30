@@ -21,9 +21,12 @@ export class MovieCreatorUseCase {
   }
 
   async run (params: MovieInput): Promise<Movie> {
+    //  TODO: add field validation is someone is missing
+
     const movie: Movie = {
       id: this._uuidGenerator.generate(),
-      title: params.title
+      title: params.title,
+      year: params.year
     }
 
     const existsMovie: boolean = await this._existsMovieByTitle.run(movie.title!)
