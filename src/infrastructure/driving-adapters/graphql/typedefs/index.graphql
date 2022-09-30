@@ -1,0 +1,7 @@
+type Query {
+  movie: [Movie]
+}
+
+type Mutation {
+  createMovie(movie: MovieCreateInput!): Movie!
+}

@@ -19,7 +19,7 @@
 
     "strictPropertyInitialization": false,
     "paths": {
-      "@infrastructure/*": ["./infrastructure/*"],
+      "@infrastructure/*": ["infrastructure/*"],
       "@application/*": ["application/*"],
       "@domain/*": ["domain/*"]
     }

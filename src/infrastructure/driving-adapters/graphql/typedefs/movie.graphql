@@ -1,0 +1,17 @@
+type Movie { 
+  id: ID!
+  title: String!
+  year: String!
+}
+
+# Inputs
+input MovieCreateInput {
+  title: String!
+  year: String!
+}
+
+input MovieUpdateInput {
+  id: ID!
+  title: String
+  year: String
+}
