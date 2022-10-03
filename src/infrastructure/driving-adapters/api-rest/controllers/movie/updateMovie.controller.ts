@@ -6,7 +6,9 @@ import { Movie } from 'domain/entities/Movie'
 export const updateMovie = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const {
     title,
-    year
+    year,
+    rating,
+    castAndCrew
   } = req.body
 
   const movieId = req.params.movieId
@@ -18,7 +20,9 @@ export const updateMovie = async (req: Request, res: Response, next: NextFunctio
     const movieToUpdate: Movie = {
       id: movieId,
       title,
-      year
+      year,
+      rating,
+      castAndCrew
     }
 
     const movie = await movieUpdaterUseCase.run(movieToUpdate)

@@ -22,11 +22,15 @@ export class DynamoDBMovieRepository implements MovieRepository {
       const id: string = item['MOVIE-LAND_PK'].S ?? ''
       const title: string = item.title.S ?? ''
       const year: string = item.year.S ?? ''
+      const rating: number = item.rating !== undefined ? item.rating.N : ''
+      const castAndCrew: string = item.cast_and_crew !== undefined ? item.cast_and_crew.S : ''
 
       return {
         id: id.split('_')[1],
         title,
-        year
+        year,
+        rating,
+        castAndCrew
       }
     })
 
@@ -54,16 +58,21 @@ export class DynamoDBMovieRepository implements MovieRepository {
     const idItem: string = item['MOVIE-LAND_PK'].S ?? ''
     const title: string = item.title.S ?? ''
     const year: string = item.year.S ?? ''
+    const rating: string | undefined = item.rating !== undefined ? item.rating.N : ''
+    const castAndCrew: string | undefined = item.cast_and_crew !== undefined ? item.cast_and_crew.S : ''
 
     const movie: Movie = {
       id: idItem.split('_')[1],
       title,
-      year
+      year,
+      rating: Number(rating),
+      castAndCrew
     }
 
     return movie
   }
 
+  // to implement in restAPI
   async getByTitle (title: string): Promise<Movie | null> {
     const response = await this._db.scan({
       TableName: DynamoDB.TABLE_NAME,
@@ -82,11 +91,15 @@ export class DynamoDBMovieRepository implements MovieRepository {
     const id: string = item['MOVIE-LAND_PK'].S ?? ''
     const titleItem: string = item.title.S ?? ''
     const year: string = item.year.S ?? ''
+    const rating: string | undefined = item.rating !== undefined ? item.rating.N : ''
+    const castAndCrew: string | undefined = item.cast_and_crew !== undefined ? item.cast_and_crew.S : ''
 
     const movie: Movie = {
       id: id.split('_')[1],
       title: titleItem,
-      year
+      year,
+      rating: Number(rating),
+      castAndCrew
     }
 
     return movie
@@ -110,6 +123,12 @@ export class DynamoDBMovieRepository implements MovieRepository {
         },
         year: {
           S: movie.year
+        },
+        rating: {
+          N: `${movie.rating!}`
+        },
+        cast_and_crew: {
+          S: movie.castAndCrew
         }
       }
     }).promise()
@@ -118,6 +137,8 @@ export class DynamoDBMovieRepository implements MovieRepository {
   }
 
   async update (movie: Movie): Promise<Movie> {
+    console.log('rating: ', movie)
+
     await this._db.updateItem({
       TableName: DynamoDB.TABLE_NAME,
       Key: {
@@ -128,10 +149,12 @@ export class DynamoDBMovieRepository implements MovieRepository {
           S: `MOVIE_${movie.id}`
         }
       },
-      UpdateExpression: 'set #title = :title, #year = :year',
+      UpdateExpression: 'set #title = :title, #year = :year, #rating = :rating, #cast_and_crew = :cast_and_crew',
       ExpressionAttributeNames: {
         '#title': 'title',
-        '#year': 'year'
+        '#year': 'year',
+        '#rating': 'rating',
+        '#cast_and_crew': 'cast_and_crew'
       },
       ExpressionAttributeValues: {
         ':title': {
@@ -139,6 +162,12 @@ export class DynamoDBMovieRepository implements MovieRepository {
         },
         ':year': {
           S: movie.year
+        },
+        ':rating': {
+          N: `${movie.rating!}`
+        },
+        ':cast_and_crew': {
+          S: movie.castAndCrew
         }
       }
     }).promise()

@@ -8,7 +8,9 @@ import { UuidV4Generator } from '../../../../Uuidv4Generator'
 export const createMovie = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const {
     title,
-    year
+    year,
+    rating,
+    castAndCrew
   } = req.body
 
   const dynamoDBMovieRepo = new DynamoDBMovieRepository()
@@ -18,7 +20,9 @@ export const createMovie = async (req: Request, res: Response, next: NextFunctio
   try {
     const movieCreated = await movieCreatorUseCase.run({
       title,
-      year
+      year,
+      rating,
+      castAndCrew
     })
 
     res.status(201).json(movieCreated)

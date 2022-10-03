@@ -7,6 +7,8 @@ import { UuidGenerator } from '../../../domain/utils/uuidGenerator'
 interface MovieInput {
   title: string
   year: string
+  rating: number
+  castAndCrew: string
 }
 
 export class MovieCreatorUseCase {
@@ -26,7 +28,9 @@ export class MovieCreatorUseCase {
     const movie: Movie = {
       id: this._uuidGenerator.generate(),
       title: body.title,
-      year: body.year
+      year: body.year,
+      rating: body.rating,
+      castAndCrew: body.castAndCrew
     }
 
     const existsMovie: boolean = await this._existsMovieByTitle.run(movie.title!)
