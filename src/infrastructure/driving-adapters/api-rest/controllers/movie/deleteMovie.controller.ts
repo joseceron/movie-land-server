@@ -10,7 +10,7 @@ export const deleteMovie = async (req: Request, res: Response, next: NextFunctio
 
   try {
     const movieDeleted = await movieDeleterUseCase.run(movieId)
-    res.json(movieDeleted)
+    res.status(204).json(movieDeleted)
     return
   } catch (e) {
     return next(e)

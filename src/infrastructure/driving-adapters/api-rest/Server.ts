@@ -4,7 +4,8 @@ import routes from './routes'
 
 export class Server {
   private readonly _port: string
-  private readonly _app: express.Express
+  // private readonly _app: express.Express
+  _app: express.Express
   private _httpServer?: http.Server
 
   constructor (port: string) {
