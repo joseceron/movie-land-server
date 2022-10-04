@@ -4,6 +4,7 @@ import { DynamoDB } from '../../../driven-adapters/AWS/dynamo-db'
 
 export class DynamoDBMovieRepository implements MovieRepository {
   private readonly _db = DynamoDB.getInstance()
+  private readonly _LIMIT_ITEMS = 3
 
   async getAll (): Promise<any[]> {
     const response = await this._db.scan({
@@ -102,9 +103,10 @@ export class DynamoDBMovieRepository implements MovieRepository {
     return movie
   }
 
-  async getByGenre (id: number): Promise<Movie[]> {
+  async getByGenre (id: number): Promise<any> {
     const response = await this._db.scan({
       TableName: DynamoDB.TABLE_NAME,
+      Limit: this._LIMIT_ITEMS,
       FilterExpression: '#genre.id = :genreId',
       ExpressionAttributeNames: {
         '#genre': 'genre'
@@ -114,6 +116,7 @@ export class DynamoDBMovieRepository implements MovieRepository {
       }
     }).promise()
 
+    const lastEvaluatedKey = response.LastEvaluatedKey ?? null
     const items = (response.Items != null) ? response.Items : []
     const movies = items.map((item: any) => {
       const id: string = item.movie_pk ?? ''
@@ -133,7 +136,13 @@ export class DynamoDBMovieRepository implements MovieRepository {
       }
     })
 
-    return movies
+    movies.sort((a: any, b: any) => a.title < b.title ? -1 : 1)
+
+    const payload = {
+      items: movies,
+      lastEvaluatedKey
+    }
+    return payload
   }
 
   async save (movie: Movie): Promise<Movie> {

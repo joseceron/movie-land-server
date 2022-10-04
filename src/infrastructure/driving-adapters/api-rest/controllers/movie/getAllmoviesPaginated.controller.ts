@@ -16,15 +16,16 @@ export const getAllmoviesPaginated = async (req: Request, res: Response, next: N
     const genres = await genreGetterUserCase.run()
 
     const promises = genres.map(async (item) => await movieGetterByGenreIdUseCase.run(item.id))
-    const movies = await Promise.all(promises)
+    const movies: any = await Promise.all(promises)
 
     const moviesPaginated: any = []
 
     genres.forEach((genre, i) => {
       const item = {
         ...genre,
-        list: movies[i]
+        ...movies[i]
       }
+
       moviesPaginated.push(item)
     })
 
