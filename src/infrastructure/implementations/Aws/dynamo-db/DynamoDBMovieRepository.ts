@@ -67,7 +67,6 @@ export class DynamoDBMovieRepository implements MovieRepository {
     return movie
   }
 
-  // TODO: implement in restAPI and useCases
   async getByTitle (title: string): Promise<Movie | null> {
     const response = await this._db.scan({
       TableName: DynamoDB.TABLE_NAME,
@@ -101,6 +100,40 @@ export class DynamoDBMovieRepository implements MovieRepository {
     }
 
     return movie
+  }
+
+  async getByGenre (id: number): Promise<Movie[]> {
+    const response = await this._db.scan({
+      TableName: DynamoDB.TABLE_NAME,
+      FilterExpression: '#genre.id = :genreId',
+      ExpressionAttributeNames: {
+        '#genre': 'genre'
+      },
+      ExpressionAttributeValues: {
+        ':genreId': id
+      }
+    }).promise()
+
+    const items = (response.Items != null) ? response.Items : []
+    const movies = items.map((item: any) => {
+      const id: string = item.movie_pk ?? ''
+      const year: string = item.year_sk ?? ''
+      const title: string = item.title ?? ''
+      const rating: number = item.rating !== undefined ? item.rating.N : ''
+      const castAndCrew: string = item.cast_and_crew !== undefined ? item.cast_and_crew : ''
+      const genre: string = item.genre ?? ''
+
+      return {
+        id,
+        title,
+        year,
+        rating,
+        castAndCrew,
+        genre
+      }
+    })
+
+    return movies
   }
 
   async save (movie: Movie): Promise<Movie> {

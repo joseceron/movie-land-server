@@ -2,6 +2,7 @@ import { Router } from 'express'
 
 import {
   getAllMoviesController,
+  getAllMoviesPaginatedController,
   getMovieByIdController,
   createMovieController,
   updateMovieController,
@@ -10,8 +11,9 @@ import {
 
 const route = Router()
 
-route.get('/:movieId', getMovieByIdController)
+route.get('/paginated', getAllMoviesPaginatedController)
 route.get('', getAllMoviesController)
+route.get('/:movieId', getMovieByIdController)
 route.post('', createMovieController)
 route.put('/:movieId', updateMovieController)
 route.delete('/:id', deleteMovieController)

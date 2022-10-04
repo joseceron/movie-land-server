@@ -10,6 +10,6 @@ export class GenreGetterUseCase {
 
   async run (): Promise<Genre[]> {
     const genres: Genre[] = await this._genreRepository.getAll()
-    return genres
+    return genres.sort((a, b) => a.name < b.name ? -1 : 1)
   }
 }
