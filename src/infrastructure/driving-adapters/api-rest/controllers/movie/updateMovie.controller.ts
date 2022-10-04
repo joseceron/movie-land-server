@@ -8,7 +8,8 @@ export const updateMovie = async (req: Request, res: Response, next: NextFunctio
     title,
     year,
     rating,
-    castAndCrew
+    castAndCrew,
+    genre
   } = req.body
 
   const movieId = req.params.movieId
@@ -22,7 +23,8 @@ export const updateMovie = async (req: Request, res: Response, next: NextFunctio
       title,
       year,
       rating,
-      castAndCrew
+      castAndCrew,
+      genre
     }
 
     const movie = await movieUpdaterUseCase.run(movieToUpdate)

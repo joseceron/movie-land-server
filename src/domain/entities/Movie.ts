@@ -4,4 +4,5 @@ export interface Movie {
   year?: string
   rating?: number
   castAndCrew?: string
+  genre?: string
 }

@@ -17,9 +17,10 @@ export class MovieUpdaterUseCase {
     const dataToUpdate: Movie = {
       id: data.id,
       title: data.title ?? movie.title,
-      year: data.year ?? movie.year,
+      year: movie.year,
       rating: data.rating ?? movie.rating,
-      castAndCrew: data.castAndCrew ?? movie.castAndCrew
+      castAndCrew: data.castAndCrew ?? movie.castAndCrew,
+      genre: data.genre ?? movie.genre
     }
 
     const movieUpdated: Movie = await this._movieRepository.update(dataToUpdate)

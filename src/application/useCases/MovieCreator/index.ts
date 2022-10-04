@@ -9,6 +9,7 @@ interface MovieInput {
   year: string
   rating: number
   castAndCrew: string
+  genre: string
 }
 
 export class MovieCreatorUseCase {
@@ -30,7 +31,8 @@ export class MovieCreatorUseCase {
       title: body.title,
       year: body.year,
       rating: body.rating,
-      castAndCrew: body.castAndCrew
+      castAndCrew: body.castAndCrew,
+      genre: body.genre
     }
 
     const existsMovie: boolean = await this._existsMovieByTitle.run(movie.title!)

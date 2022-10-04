@@ -10,7 +10,8 @@ export const createMovie = async (req: Request, res: Response, next: NextFunctio
     title,
     year,
     rating,
-    castAndCrew
+    castAndCrew,
+    genre
   } = req.body
 
   const dynamoDBMovieRepo = new DynamoDBMovieRepository()
@@ -22,7 +23,8 @@ export const createMovie = async (req: Request, res: Response, next: NextFunctio
       title,
       year,
       rating,
-      castAndCrew
+      castAndCrew,
+      genre
     })
 
     res.status(201).json(movieCreated)

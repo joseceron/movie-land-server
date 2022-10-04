@@ -1,7 +1,7 @@
 import { Movie } from '../entities/Movie'
 
 export interface MovieRepository {
-  getAll: () => Promise<Movie[]>
+  getAll: () => Promise<any[]>
   getById: (id: string) => Promise<Movie | null>
   getByTitle: (title: string) => Promise<Movie | null>
   save: (movie: Movie) => Promise<Movie>
