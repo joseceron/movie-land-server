@@ -1,5 +1,8 @@
 import { User } from '@domain/entities/User'
+import { UserSession } from '@domain/entities/UserSession'
+
 import { UserRepository } from '@domain/repositories/UserRepository'
+
 import { ExistsUserByEmail } from '../../../../domain/services/ExistsUserByEmail'
 import { UserAlreadyExistsException } from '../../../../domain/exceptions/UserAlreadyExistsException'
 import { UuidGenerator } from '@domain/utils/uuidGenerator'
@@ -9,11 +12,11 @@ import { JwtHandler } from '@domain/utils/jwtHandler'
 interface UserInput {
   email: string
   password: string
-  // token: string
 }
 
 export class UserCreatorUseCase {
   private readonly _userRepository: UserRepository
+
   private readonly _existUserByEmail: ExistsUserByEmail
   private readonly _uuidGenerator: UuidGenerator
   private readonly _bcryptHandler: BcryptHandler
@@ -25,6 +28,7 @@ export class UserCreatorUseCase {
     bcrypHandler: BcryptHandler,
     jwtHandler: JwtHandler) {
     this._userRepository = userRepository
+
     this._uuidGenerator = uuidGenerator
     this._bcryptHandler = bcrypHandler
     this._jwtHandler = jwtHandler
@@ -38,17 +42,20 @@ export class UserCreatorUseCase {
     const user: User = {
       id: this._uuidGenerator.generate(),
       email: body.email,
-      password: encryptedPassword,
-      token: ''
+      password: encryptedPassword
     }
-    const existsUser: boolean = await this._existUserByEmail.run(user.email)
 
+    const existsUser: boolean = await this._existUserByEmail.run(user.email)
     if (existsUser) throw new UserAlreadyExistsException()
 
     const token = this._jwtHandler.sign(user.email)
-    user.token = token
+    const userSession: UserSession = {
+      email: body.email,
+      token
+    }
 
-    const userCreated: User = await this._userRepository.save(user)
-    return userCreated
+    const userCreated = await this._userRepository.save(user, userSession)
+    const { password, ...useCreatedDTO } = userCreated
+    return useCreatedDTO
   }
 }

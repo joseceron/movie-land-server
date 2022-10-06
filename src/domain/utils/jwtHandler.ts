@@ -1,4 +1,4 @@
 export interface JwtHandler {
-  sign: (id: string) => string
+  sign: (email: string) => string
   verify: (token: string) => string
 }
