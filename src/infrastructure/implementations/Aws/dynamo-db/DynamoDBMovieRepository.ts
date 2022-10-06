@@ -16,7 +16,7 @@ export class DynamoDBMovieRepository implements MovieRepository {
       const id: string = item.movie_pk ?? ''
       const year: string = item.year_sk ?? ''
       const title: string = item.title ?? ''
-      const rating: number = item.rating !== undefined ? item.rating.N : ''
+      const rating: number = item.rating !== undefined ? item.rating : ''
       const castAndCrew: string = item.cast_and_crew !== undefined ? item.cast_and_crew : ''
       const genre: string = item.genre ?? ''
 
@@ -122,7 +122,7 @@ export class DynamoDBMovieRepository implements MovieRepository {
       const id: string = item.movie_pk ?? ''
       const year: string = item.year_sk ?? ''
       const title: string = item.title ?? ''
-      const rating: number = item.rating !== undefined ? item.rating.N : ''
+      const rating: number = item.rating !== undefined ? item.rating : ''
       const castAndCrew: string = item.cast_and_crew !== undefined ? item.cast_and_crew : ''
       const genre: string = item.genre ?? ''
 
