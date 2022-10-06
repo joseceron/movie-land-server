@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { auth } from '../middleware/auth'
 
 import {
   getAllMoviesController,
@@ -12,7 +13,7 @@ import {
 const route = Router()
 
 route.get('/paginated', getAllMoviesPaginatedController)
-route.get('', getAllMoviesController)
+route.get('', auth, getAllMoviesController)
 route.get('/:movieId', getMovieByIdController)
 route.post('', createMovieController)
 route.put('/:movieId', updateMovieController)
