@@ -12,11 +12,11 @@ import {
 
 const route = Router()
 
-route.get('/paginated', getAllMoviesPaginatedController)
+route.get('/paginated', auth, getAllMoviesPaginatedController)
 route.get('', auth, getAllMoviesController)
-route.get('/:movieId', getMovieByIdController)
-route.post('', createMovieController)
-route.put('/:movieId', updateMovieController)
-route.delete('/:id', deleteMovieController)
+route.get('/:movieId', auth, getMovieByIdController)
+route.post('', auth, createMovieController)
+route.put('/:movieId', auth, updateMovieController)
+route.delete('/:id', auth, deleteMovieController)
 
 export default route
