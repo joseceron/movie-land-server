@@ -187,7 +187,6 @@ export class DynamoDBMovieRepository implements MovieRepository {
   }
 
   async delete (movie: Movie): Promise<void> {
-    console.log(movie)
     await this._db.delete({
       TableName: DynamoDB.TABLE_NAME,
       Key: {

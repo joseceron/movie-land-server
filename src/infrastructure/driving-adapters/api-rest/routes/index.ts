@@ -6,8 +6,8 @@ import { Exception } from '../../../../domain/exceptions/Exception'
 
 const route = Router()
 
-route.use('/movies', movieRoutes)
-route.use('/users', userRoutes)
+route.use('/v1/movies', movieRoutes)
+route.use('/v1/users', userRoutes)
 
 route.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof Exception) {
