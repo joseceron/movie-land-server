@@ -1,11 +1,13 @@
 
 import { Request, Response, Router, NextFunction } from 'express'
 import movieRoutes from './movie.routes'
+import userRoutes from './user.routes'
 import { Exception } from '../../../../domain/exceptions/Exception'
 
 const route = Router()
 
 route.use('/movies', movieRoutes)
+route.use('/users', userRoutes)
 
 route.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof Exception) {

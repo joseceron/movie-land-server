@@ -7,7 +7,7 @@ import {
   createMovieController,
   updateMovieController,
   deleteMovieController
-} from '../controllers/index'
+} from '../controllers/movie/index'
 
 const route = Router()
 
