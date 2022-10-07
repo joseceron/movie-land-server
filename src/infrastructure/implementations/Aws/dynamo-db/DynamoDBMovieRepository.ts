@@ -4,7 +4,7 @@ import { DynamoDB } from '../../../driven-adapters/AWS/dynamo-db'
 
 export class DynamoDBMovieRepository implements MovieRepository {
   private readonly _db = DynamoDB.getInstance()
-  private readonly _LIMIT_ITEMS = 3
+  private readonly _LIMIT_ITEMS = 5
 
   async getAll (): Promise<any[]> {
     const response = await this._db.scan({
