@@ -40,4 +40,14 @@ export class DynamoDBUserSessionRepository implements UserSessionRepository {
 
     return session
   }
+
+  async delete (email: string, token: string): Promise<any> {
+    await this._db.delete({
+      TableName: DynamoDB.USER_SESSIONS_TABLE_NAME,
+      Key: {
+        email_pk: email,
+        token_sk: token
+      }
+    }).promise()
+  }
 }

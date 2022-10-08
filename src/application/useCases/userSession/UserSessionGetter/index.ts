@@ -2,7 +2,7 @@ import { UserSession } from 'domain/entities/UserSession'
 import { UserSessionRepository } from 'domain/repositories/UserSessionRepository'
 
 import { UserNotFoundException } from '../../../../domain/exceptions/UserNotFoundException'
-import { UnableToLoginException } from '../../../../domain/exceptions/UnableToLogin'
+import { UnableToGetSessionException } from '../../../../domain/exceptions/UnableToGetSessionException'
 
 import { JwtHandler } from '@domain/utils/jwtHandler'
 
@@ -26,7 +26,7 @@ export class UserSessionGetter {
       if (user === null) { throw new UserNotFoundException() }
       return user
     } catch (error) {
-      throw new UnableToLoginException()
+      throw new UnableToGetSessionException()
     }
   }
 }
